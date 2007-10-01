@@ -1,36 +1,23 @@
-# $Id: Makefile.PL,v 1.10 2007/10/01 16:46:06 drhyde Exp $
+# $Id: Makefile.PL,v 1.13 2007/10/01 21:29:08 drhyde Exp $
 
+use 5.005;
 use ExtUtils::MakeMaker;
-use Cwd;
+
+use File::Spec;
 
 use strict;
 $^W = 1;
 
 use lib 'lib';
 
-# this and all the annoying chdir()s are because I have no idea how to
-# construct paths on VMS and RISCOS.  Doing several individual chdir()s
-# should work, also I opendir() directory names and not '.' or 'foo/bar'.
-# Yuck.
-#
-# If only I could assume File::Spec was installed at this point, but I
-# can't.  Double-yuck.
-
-my $cwd = getcwd();
-
 opendir(T, 't');
-chdir('t');
-unlink $_ foreach(grep { /^XX/ } readdir(T));
+unlink File::Spec->catfile('t', $_) foreach(grep { /^XX/ } readdir(T));
 close(T);
-chdir($cwd);
 
 my @OSes = ();
 my @notOSes = ();
-chdir('lib');
-chdir('Devel');
-opendir(LIBS, 'AssertOS') ||
+opendir(LIBS, File::Spec->catdir(qw(lib Devel AssertOS))) ||
     die("Can't read lib/Devel/AssertOS. Your distribution is broken\n");
-chdir($cwd);
 foreach (map { s/\.pm$//; $_ } grep { /\.pm$/ } readdir(LIBS)) {
     eval "use Devel::AssertOS::$_";
     next if($@);
@@ -47,25 +34,26 @@ foreach (map { s/\.pm$//; $_ } grep { /\.pm$/ } readdir(LIBS)) {
 }
 closedir(LIBS);
 
-chdir('t');
+my @extrafiles = ();
 if(@notOSes) { # user told us we got it wrong
-    open(FAIL, ">XX-autodetected-$^O-as-".join('-', @notOSes).".t");
+    push @extrafiles, File::Spec->catfile('t', "XX-autodetected-$^O-as-".join('-', @notOSes).".t");
+    open(FAIL, '>'.$extrafiles[-1]);
     print FAIL 'print "1..1\\n";print "not ok 1\\n"';
     close(FAIL);
 } elsif(!@OSes) { # didn't detect anything!
-    open(FAIL, ">XX-autodetected-$^O-as-nothing.t");
+    push @extrafiles, File::Spec->catfile('t', "XX-autodetected-$^O-as-nothing.t");
+    open(FAIL, '>'.$extrafiles[-1]);
     print FAIL 'print "1..1\\n";print "not ok 1\\n"';
     close(FAIL);
 } elsif(@OSes) {
     # OS-specific tests?
 }
-chdir($cwd);
 
 # print "OSes: ".join(', ', @OSes)."\n";
 
 WriteMakefile(
     NAME         => 'Devel::CheckOS',
-    VERSION      => 0.91,
+    VERSION      => 0.92,
     # FIXME have this look at all the modules, or summat
     # VERSION_FROM => 'lib/Devel/CheckOS.pm',
     PREREQ_PM    => {
@@ -73,5 +61,6 @@ WriteMakefile(
         'File::Find::Rule' => 0.28,
         'File::Spec::Functions' => '1.3',
         # 'Exporter' => 0 # core
-    }
+    },
+    clean         => { FILES => join(' ', @extrafiles) }
 );

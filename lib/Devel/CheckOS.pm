@@ -1,4 +1,4 @@
-# $Id: CheckOS.pm,v 1.7 2007/09/30 14:17:59 drhyde Exp $
+# $Id: CheckOS.pm,v 1.9 2007/10/01 16:36:38 drhyde Exp $
 
 package Devel::CheckOS;
 
@@ -6,7 +6,7 @@ use strict;
 
 use vars qw($VERSION @ISA @EXPORT_OK %EXPORT_TAGS);
 
-$VERSION = '1.0';
+$VERSION = '1.1';
 
 # localising prevents the warningness leaking out of this module
 local $^W = 1;    # use warnings is a 5.6-ism
@@ -135,23 +135,26 @@ add-ons you have installed.
 =cut
 
 sub list_platforms {
-    eval "use File::Find::Rule"; # only load this if needed
+    eval " # only load these if needed
+        use File::Find::Rule;
+        use File::Spec::Functions qw(catdir);
+    ";
+    
     die($@) if($@);
-    # FIXME: $_/Devel/AssertOS not portable
     return sort { $a cmp $b } map {
         s/^.*\///g;
         s/\.pm$//gi;
         $_;
     } File::Find::Rule->file()->name('*.pm')->in(
         grep { -d }
-        map { "$_/Devel/AssertOS" }
+        map { catdir($_, qw(Devel AssertOS)) }
         @INC
     );
 }
 
 =head1 PLATFORMS SUPPORTED
 
-To see the list of platforms supported "out of the box", run this:
+To see the list of platforms for which information is available, run this:
 
     perl -MDevel::CheckOS -e 'print join(", ", Devel::CheckOS::list_platforms())'
 
@@ -166,7 +169,7 @@ Also be aware that not all of them have been properly tested.  I don't
 have access to most of them and have had to work from information
 gleaned from L<perlport> and a few other places.
 
-The following OS 'families' are supported:
+The following OS 'families' are supported 'out of the box':
 
     Apple (Mac OS, both classic and OS X)
     DEC
@@ -205,7 +208,7 @@ L<Devel::AssertOS::Extending>
 David Cantrell E<lt>F<david@cantrell.org.uk>E<gt>
 
 Thanks to David Golden for the name and ideas about the interface, and
-for the cpan-testers-discuss mailing list for prompting me to write it
+to the cpan-testers-discuss mailing list for prompting me to write it
 in the first place.
 
 Thanks to Ken Williams, from whose L<Module::Build> I lifted some of the

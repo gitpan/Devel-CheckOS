@@ -1,4 +1,4 @@
-# $Id: CheckOS.pm,v 1.9 2007/10/01 16:36:38 drhyde Exp $
+# $Id: CheckOS.pm,v 1.12 2007/10/02 07:53:06 drhyde Exp $
 
 package Devel::CheckOS;
 
@@ -132,12 +132,17 @@ Devel::AssertOS::* module is available.  This includes both OSes and OS
 families, and both those bundled with this module and any third-party
 add-ons you have installed.
 
+Unfortunately, on some platforms this list may have file case
+broken.  eg, some platforms might return 'freebsd' instead of 'FreeBSD'.
+This is because they have case-insensitive filesystems so things
+should Just Work anyway.
+
 =cut
 
 sub list_platforms {
     eval " # only load these if needed
         use File::Find::Rule;
-        use File::Spec::Functions qw(catdir);
+        use File::Spec;
     ";
     
     die($@) if($@);
@@ -147,7 +152,7 @@ sub list_platforms {
         $_;
     } File::Find::Rule->file()->name('*.pm')->in(
         grep { -d }
-        map { catdir($_, qw(Devel AssertOS)) }
+        map { File::Spec->catdir($_, qw(Devel AssertOS)) }
         @INC
     );
 }
@@ -213,6 +218,8 @@ in the first place.
 
 Thanks to Ken Williams, from whose L<Module::Build> I lifted some of the
 information about what should be in the Unix family.
+
+Thanks to Billy Abbott for finding some bugs for me on VMS.
 
 =head1 COPYRIGHT and LICENCE
 

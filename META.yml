@@ -1,12 +1,11 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Devel-CheckOS
-version:      0.92
+version:      1.0
 version_from: 
 installdirs:  site
 requires:
     File::Find::Rule:              0.28
-    File::Spec::Functions:         1.3
     Test::More:                    0.62
 
 distribution_type: module

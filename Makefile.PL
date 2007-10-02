@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.13 2007/10/01 21:29:08 drhyde Exp $
+# $Id: Makefile.PL,v 1.18 2007/10/02 15:44:14 drhyde Exp $
 
 use 5.005;
 use ExtUtils::MakeMaker;
@@ -46,20 +46,27 @@ if(@notOSes) { # user told us we got it wrong
     print FAIL 'print "1..1\\n";print "not ok 1\\n"';
     close(FAIL);
 } elsif(@OSes) {
-    # OS-specific tests?
+    foreach my $os (@OSes) {
+        push @extrafiles, File::Spec->catfile('t', "XX-autodetected-$^O-as-$os.t");
+        open(PASS, '>'.$extrafiles[-1]);
+        print PASS qq{
+            use Devel::AssertOS::$os;
+            print "1..1\\n";print "ok 1\\n";
+        };
+        close(PASS);
+    }
 }
 
 # print "OSes: ".join(', ', @OSes)."\n";
 
 WriteMakefile(
     NAME         => 'Devel::CheckOS',
-    VERSION      => 0.92,
+    VERSION      => '1.0',
     # FIXME have this look at all the modules, or summat
     # VERSION_FROM => 'lib/Devel/CheckOS.pm',
     PREREQ_PM    => {
         'Test::More'       => 0.62,  # too high? but it works
         'File::Find::Rule' => 0.28,
-        'File::Spec::Functions' => '1.3',
         # 'Exporter' => 0 # core
     },
     clean         => { FILES => join(' ', @extrafiles) }

@@ -209,6 +209,8 @@ L<Devel::AssertOS>
 
 L<Devel::AssertOS::Extending>
 
+The use-devel-assertos script
+
 =head1 AUTHOR
 
 David Cantrell E<lt>F<david@cantrell.org.uk>E<gt>

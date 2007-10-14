@@ -1,6 +1,6 @@
-# $Id: Makefile.PL,v 1.19 2007/10/04 20:15:01 drhyde Exp $
+# $Id: Makefile.PL,v 1.22 2007/10/14 16:03:44 drhyde Exp $
 
-use 5.005;
+require 5.005;
 use ExtUtils::MakeMaker;
 
 use File::Spec;
@@ -22,7 +22,7 @@ foreach (map { s/\.pm$//; $_ } grep { /\.pm$/ } readdir(LIBS)) {
     eval "use Devel::AssertOS::$_";
     next if($@);
     my $answer = prompt(
-        "I think you're using $_, is this right? [Y/n]",
+        "I think you're using $_, is this right (multiple matches are OK)? [Y/n]",
         "Y"
     );
     if($answer =~ /^y/i) {
@@ -61,7 +61,7 @@ if(@notOSes) { # user told us we got it wrong
 
 WriteMakefile(
     NAME         => 'Devel::CheckOS',
-    VERSION      => '1.1',
+    VERSION      => '1.2',
     # FIXME have this look at all the modules, or summat
     # VERSION_FROM => 'lib/Devel/CheckOS.pm',
     PREREQ_PM    => {
@@ -69,5 +69,9 @@ WriteMakefile(
         'File::Find::Rule' => 0.28,
         # 'Exporter' => 0 # core
     },
+    EXE_FILES    => [qw(
+        bin/use-devel-assertos
+    )],
+
     clean         => { FILES => join(' ', @extrafiles) }
 );

@@ -1,4 +1,4 @@
-# $Id: CheckOS.pm,v 1.13 2007/10/04 20:15:05 drhyde Exp $
+# $Id: CheckOS.pm,v 1.17 2007/10/19 16:57:11 drhyde Exp $
 
 package Devel::CheckOS;
 
@@ -7,7 +7,7 @@ use Exporter;
 
 use vars qw($VERSION @ISA @EXPORT_OK %EXPORT_TAGS);
 
-$VERSION = '1.2';
+$VERSION = '1.3';
 
 # localising prevents the warningness leaking out of this module
 local $^W = 1;    # use warnings is a 5.6-ism
@@ -32,8 +32,10 @@ like Linux, Solaris, AIX etc.
 
 =head1 SYNOPSIS
 
-    use Devel::CheckOS;
+    use Devel::CheckOS qw(os_is);
     print "Hey, I know this, it's a Unix system\n" if(os_is('Unix'));
+
+    print "You've got Linux 2.6\n" if(os_is('Linux::v2_6'));
 
 =head1 FUNCTIONS
 
@@ -65,7 +67,7 @@ sub os_is {
     my @targets = @_;
     foreach my $target (@targets) {
         die("Devel::CheckOS: $target isn't a legal OS name\n")
-            unless($target =~ /^\w+$/);
+            unless($target =~ /^\w+(::\w+)*$/);
         eval "use Devel::AssertOS::$target";
         if(!$@) {
             no strict 'refs';
@@ -148,8 +150,8 @@ sub list_platforms {
     
     die($@) if($@);
     return sort { $a cmp $b } map {
-        s/^.*\///g;
-        s/\.pm$//gi;
+        s/(^.*Devel\/AssertOS\/|\.pm$)//g;
+        s/\//::/;
         $_;
     } File::Find::Rule->file()->name('*.pm')->in(
         grep { -d }

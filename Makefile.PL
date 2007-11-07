@@ -1,6 +1,4 @@
-use lib inc; use Devel::AssertOS qw(Linux MacOSX);
-
-# $Id: Makefile.PL,v 1.24 2007/10/19 16:57:11 drhyde Exp $
+# $Id: Makefile.PL,v 1.25 2007/11/07 21:26:40 drhyde Exp $
 
 require 5.005;
 use ExtUtils::MakeMaker;

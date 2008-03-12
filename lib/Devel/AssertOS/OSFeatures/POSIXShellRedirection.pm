@@ -1,4 +1,4 @@
-# $Id$
+# $Id: POSIXShellRedirection.pm,v 1.1 2007/11/20 21:04:38 drhyde Exp $
 
 package Devel::AssertOS::OSFeatures::POSIXShellRedirection;
 

@@ -68,4 +68,8 @@ TODO
 MANIFEST
 README
 CHANGES
+t/otherlib/Devel/AssertOS/AnOperatingSystem.pm
+t/50-script.t
+t/pod.t
+lib/Devel/AssertOS/MirOSBSD.pm
 META.yml                                 Module meta-data (added by MakeMaker)

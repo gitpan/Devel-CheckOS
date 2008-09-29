@@ -1,4 +1,4 @@
-# $Id: Makefile.PL,v 1.27 2008/03/04 17:55:43 drhyde Exp $
+# $Id: Makefile.PL,v 1.29 2008/06/16 15:01:29 drhyde Exp $
 
 require 5.005;
 use ExtUtils::MakeMaker;
@@ -83,6 +83,7 @@ WriteMakefile(
     PREREQ_PM    => {
         'Test::More'       => 0.62,  # too high? but it works
         'File::Find::Rule' => 0.28,
+	'File::Temp'       => 0.20,
         # 'Exporter' => 0 # core
     },
     EXE_FILES    => [qw(

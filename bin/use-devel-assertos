@@ -1,22 +1,35 @@
-#!perl -w
+#!perl
 
 use strict;
+# NB no warnings because of "implicit split to @_"
 
 $/ = undef;
 
-# use File::Copy;
 use File::Spec;
+use Data::Compare;
 
 my @files = grep { -f $_ } qw(Makefile.PL Build.PL);
 push @files, 'Makefile.PL' unless(@files);
 
-my @oses = @ARGV;
+my @oses = @ARGV || die("You must specify at least one OS\n");
 
-foreach my $os (@oses) {
-    eval "use Devel::AssertOS qw($os)";
-    die("Couldn't find a module for $os\n") if($@ && $@ !~ /OS unsupported/);
+eval "use Devel::AssertOS"; # to load AssertOS and CheckOS
+
+if($oses[0] eq '-l') {
+    print join(', ', Devel::CheckOS::list_platforms())."\n";
+    exit(0);
 }
 
+# NB can't just use scalar list_platforms cos that won't tell us that,
+# eg, Linux::v2_6 also uses Linux
+foreach my $os (@oses) {
+    my $oldinc = { map { $_ => $INC{$_} } keys %INC }; # clone
+    eval "use Devel::AssertOS qw($os)";
+    if(Compare(\%INC, $oldinc)) {
+        print STDERR "Couldn't find a module for $os\n";
+        exit(1);
+    }
+}
 my %modules = map { $_ => $INC{$_} } grep { /Devel/i && /(Check|Assert)OS/i } keys %INC;
 
 mkdir 'inc';
@@ -45,6 +58,7 @@ foreach my $module (keys %modules) {
     open(PM, '>'.File::Spec->catfile(@dircomponents, $file)) ||
         die("Can't write ".File::Spec->catfile(@dircomponents, $file).": $!");
     print PM $pm;
+    print "Copied $modules{$module} to\n       ".File::Spec->catfile(@dircomponents, $file)."\n";
     close(PM);
 
     print MANIFEST join('/', @dircomponents, $file)."\n";
@@ -86,6 +100,12 @@ appropriately.  If neither exists, it will create a Makefile.PL.
 
 In the example above, this will insert code to make your module
 depend on one of the specified OSes.
+
+=head1 SUPPORTED PLATFORMS
+
+To get a list of supported platforms, do this:
+
+    use-devel-assertos -l
 
 =head1 WARNINGS, BUGS and FEEDBACK
 

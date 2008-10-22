@@ -1,15 +1,12 @@
-# $Id: DEC.pm,v 1.3 2007/10/19 16:45:51 drhyde Exp $
+# $Id: v4.pm,v 1.1 2008/10/22 19:10:52 drhyde Exp $
 
-package Devel::AssertOS::DEC;
+package Devel::AssertOS::QNX::v4;
 
 use Devel::CheckOS;
 
-$VERSION = '1.1';
+$VERSION = '1.0';
 
-sub os_is {
-    Devel::CheckOS::os_is('OSF') ||
-    Devel::CheckOS::os_is('VMS')
-}
+sub os_is { $^O eq 'qnx' ? 1 : 0; }
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

@@ -1,4 +1,4 @@
-# $Id: CheckOS.pm,v 1.27 2008/09/26 14:28:43 drhyde Exp $
+# $Id: CheckOS.pm,v 1.28 2008/10/22 19:10:52 drhyde Exp $
 
 package Devel::CheckOS;
 
@@ -7,7 +7,7 @@ use Exporter;
 
 use vars qw($VERSION @ISA @EXPORT_OK %EXPORT_TAGS);
 
-$VERSION = '1.44';
+$VERSION = '1.45';
 
 # localising prevents the warningness leaking out of this module
 local $^W = 1;    # use warnings is a 5.6-ism
@@ -222,15 +222,8 @@ Sorry.
 
 Also be aware that not all of them have been properly tested.  I don't
 have access to most of them and have had to work from information
-gleaned from L<perlport> and a few other places.
-
-The following OS 'families' are supported 'out of the box':
-
-    Apple (Mac OS, both classic and OS X)
-    DEC
-    MicrosoftWindows (this matches either MSWin32 or Cygwin)
-    Sun
-    Unix
+gleaned from L<perlport> and a few other places.  For a complete list of
+OS families, see L<Devel::CheckOS::Families>.
 
 If you want to add your own OSes or families, see L<Devel::AssertOS::Extending>
 and please feel free to upload the results to the CPAN.
@@ -275,6 +268,8 @@ information about what should be in the Unix family.
 
 Thanks to Billy Abbott for finding some bugs for me on VMS.
 
+Thanks to Matt Kraai for information about QNX.
+
 =head1 CVS
 
 L<http://drhyde.cvs.sourceforge.net/drhyde/perlmodules/Devel-CheckOS/>
@@ -283,8 +278,7 @@ L<http://drhyde.cvs.sourceforge.net/drhyde/perlmodules/Devel-CheckOS/>
 
 Copyright 2007 David Cantrell
 
-This module is free-as-in-speech software, and may be used, distributed,
-and modified under the same conditions as perl itself.
+This software is free-as-in-speech software, and may be used, distributed, and modified under the terms of either the GNU General Public Licence version 2 or the Artistic Licence. It's up to you which one you use. The full text of the licences can be found in the files GPL2.txt and ARTISTIC.txt, respectively.
 
 =head1 CONSPIRACY
 

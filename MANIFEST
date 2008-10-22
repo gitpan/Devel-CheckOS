@@ -72,4 +72,11 @@ t/otherlib/Devel/AssertOS/AnOperatingSystem.pm
 t/50-script.t
 t/pod.t
 lib/Devel/AssertOS/MirOSBSD.pm
+lib/Devel/AssertOS/Realtime.pm
+lib/Devel/AssertOS/QNX.pm
+lib/Devel/AssertOS/QNX/Neutrino.pm
+lib/Devel/AssertOS/QNX/v4.pm
+ARTISTIC.txt
+GPL2.txt
+lib/Devel/CheckOS/Families.pod
 META.yml                                 Module meta-data (added by MakeMaker)

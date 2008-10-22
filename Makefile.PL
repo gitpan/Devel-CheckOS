@@ -83,7 +83,7 @@ WriteMakefile(
     PREREQ_PM    => {
         'Test::More'       => 0.62,  # too high? but it works
         'File::Find::Rule' => 0.28,
-	'File::Temp'       => 0.20,
+	'File::Temp'       => 0.18,
         # 'Exporter' => 0 # core
     },
     EXE_FILES    => [qw(

@@ -1,4 +1,4 @@
-# $Id: Sun.pm,v 1.3 2007/10/19 16:45:52 drhyde Exp $
+# $Id: Sun.pm,v 1.4 2008/10/27 20:31:21 drhyde Exp $
 
 package Devel::AssertOS::Sun;
 

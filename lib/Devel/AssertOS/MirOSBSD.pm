@@ -1,4 +1,4 @@
-# $Id: MirOSBSD.pm,v 1.1 2008/09/26 14:28:43 drhyde Exp $
+# $Id: MirOSBSD.pm,v 1.2 2008/10/27 20:31:21 drhyde Exp $
 
 package Devel::AssertOS::MirOSBSD;
 

@@ -8,6 +8,8 @@ $VERSION = '1.1';
 
 sub os_is { $^O eq 'os390' ? 1 : 0; }
 
+sub expn { "OS390 is also known as z/OS" }
+
 Devel::CheckOS::die_unsupported() unless(os_is());
 
 =head1 COPYRIGHT and LICENCE

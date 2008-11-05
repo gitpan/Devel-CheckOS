@@ -6,11 +6,13 @@ use Devel::CheckOS;
 
 use Devel::AssertOS::MacOSX;
 
-$VERSION = '1.1';
+$VERSION = '1.2';
 
 sub os_is {
     `sw_vers -productVersion` =~ /^10\.4\./ ? 1 : 0;
 }
+
+sub expn { "The operating system is some version of OS X Tiger (10.4)" }
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

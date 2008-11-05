@@ -4,11 +4,18 @@ package Devel::AssertOS::DEC;
 
 use Devel::CheckOS;
 
-$VERSION = '1.1';
+$VERSION = '1.3';
 
 sub os_is {
     Devel::CheckOS::os_is('OSF') ||
     Devel::CheckOS::os_is('VMS')
+}
+
+sub expn {
+join("\n",
+"The operating system is from Digital Equipment Corporation, or was",
+"originally written by DEC before they were taken over by Compaq/HP"
+)
 }
 
 Devel::CheckOS::die_unsupported() unless(os_is());

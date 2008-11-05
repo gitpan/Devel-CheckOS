@@ -8,6 +8,8 @@ $VERSION = '1.1';
 
 sub os_is { $^O eq 'riscos' ? 1 : 0; }
 
+sub expn { "This is the Acorn operating system, not the MIPS RISC/os system" }
+
 Devel::CheckOS::die_unsupported() unless(os_is());
 
 =head1 COPYRIGHT and LICENCE

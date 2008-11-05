@@ -8,6 +8,8 @@ $VERSION = '1.1';
 
 sub os_is { $^O eq 'dec_osf' ? 1 : 0; }
 
+sub expn { "OSF is also known as OSF/1, Digital Unix, and Tru64 Unix" }
+
 Devel::CheckOS::die_unsupported() unless(os_is());
 
 =head1 COPYRIGHT and LICENCE

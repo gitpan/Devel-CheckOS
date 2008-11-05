@@ -4,7 +4,7 @@ package Devel::AssertOS::Realtime;
 
 use Devel::CheckOS;
 
-$VERSION = '1.0';
+$VERSION = '1.1';
 
 sub os_is {
     Devel::CheckOS::os_is('QNX')
@@ -12,6 +12,7 @@ sub os_is {
     ;
 }
 
+sub expn { "This is a realtime operating system" }
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

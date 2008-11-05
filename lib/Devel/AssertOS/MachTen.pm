@@ -8,6 +8,13 @@ $VERSION = '1.1';
 
 sub os_is { $^O eq 'machten' ? 1 : 0; }
 
+sub expn {
+join("\n",
+"You're using the Mach Ten BSD-compatible environment on top of",
+"Mac OS 'Classic' - ie, a pre-OS-X version of Mac OS.",
+)
+}
+
 Devel::CheckOS::die_unsupported() unless(os_is());
 
 =head1 COPYRIGHT and LICENCE

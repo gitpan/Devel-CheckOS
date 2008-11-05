@@ -4,9 +4,16 @@ package Devel::AssertOS::Cygwin;
 
 use Devel::CheckOS;
 
-$VERSION = '1.1';
+$VERSION = '1.2';
 
 sub os_is { $^O eq 'cygwin' ? 1 : 0; }
+
+sub expn {
+join("\n",
+"The operating system is Microsoft Windows, but perl was built using",
+"the POSIXish API provided by Cygwin"
+)
+}
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

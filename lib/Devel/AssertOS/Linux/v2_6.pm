@@ -6,11 +6,13 @@ use Devel::CheckOS;
 
 use Devel::AssertOS::Linux;
 
-$VERSION = '1.1';
+$VERSION = '1.2';
 
 sub os_is {
     `uname -r` =~ /^2\.6\./ ? 1 : 0;
 }
+
+sub expn { "The operating system has a Linux 2.6.x series kernel" }
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

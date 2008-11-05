@@ -4,7 +4,7 @@ package Devel::AssertOS::OSFeatures::POSIXShellRedirection;
 
 use Devel::CheckOS;
 
-use Devel::AssertOS qw(Unix Cygwin);
+use Devel::AssertOS qw(Unix Cygwin BeOS);
 
 =head1 NAME
 
@@ -24,9 +24,21 @@ This software is free-as-in-speech software, and may be used, distributed, and m
 
 =cut
 
-$VERSION = '1.1';
+$VERSION = '1.2';
 
 sub os_is { 1; }
+
+sub expn {
+join("\n",
+"The operating system's normal shell(s) support POSIX-style redirection",
+"such as:",
+"  foo |  more    (piping from one command to another)",
+"  foo >  file    (redirection of STDOUT to a file)",
+"  foo 2> file    (redirection of STDERR to a file)",
+"  foo <  file    (redirection of STDIN from a file)",
+"and so on"
+)
+}
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

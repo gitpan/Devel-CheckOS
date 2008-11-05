@@ -4,9 +4,11 @@ package Devel::AssertOS::QNX::v4;
 
 use Devel::CheckOS;
 
-$VERSION = '1.0';
+$VERSION = '1.1';
 
 sub os_is { $^O eq 'qnx' ? 1 : 0; }
+
+sub expn { "The operating system is version 4 of QNX" }
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

@@ -1,17 +1,12 @@
-# $Id: Sun.pm,v 1.4 2008/10/27 20:31:21 drhyde Exp $
+# $Id$
 
-package Devel::AssertOS::Sun;
+package Devel::AssertOS::Haiku;
 
 use Devel::CheckOS;
 
-$VERSION = '1.2';
+$VERSION = '1.0';
 
-sub os_is {
-    Devel::CheckOS::os_is('SunOS') ||
-    Devel::CheckOS::os_is('Solaris')
-}
-
-sub expn { "The operating system is from Sun Microsystems" }
+sub os_is { $^O eq 'haiku' ? 1 : 0; }
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

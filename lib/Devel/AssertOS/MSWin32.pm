@@ -4,9 +4,16 @@ package Devel::AssertOS::MSWin32;
 
 use Devel::CheckOS;
 
-$VERSION = '1.1';
+$VERSION = '1.2';
 
 sub os_is { $^O eq 'MSWin32' ? 1 : 0; }
+
+sub expn {
+join("\n",
+"The operating system is Microsoft Windows, and perl was built using",
+"the Win32 API"
+)
+}
 
 Devel::CheckOS::die_unsupported() unless(os_is());
 

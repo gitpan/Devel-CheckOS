@@ -1,4 +1,4 @@
-# $Id: v2_6.pm,v 1.3 2008/10/27 20:31:21 drhyde Exp $
+# $Id: v2_6.pm,v 1.4 2008/11/05 22:52:35 drhyde Exp $
 
 package Devel::AssertOS::Linux::v2_6;
 

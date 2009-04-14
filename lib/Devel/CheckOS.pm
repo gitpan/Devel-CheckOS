@@ -1,4 +1,4 @@
-# $Id: CheckOS.pm,v 1.31 2008/11/05 22:52:34 drhyde Exp $
+# $Id: CheckOS.pm,v 1.32 2008/11/11 23:49:49 drhyde Exp $
 
 package Devel::CheckOS;
 
@@ -7,13 +7,13 @@ use Exporter;
 
 use vars qw($VERSION @ISA @EXPORT_OK %EXPORT_TAGS);
 
-$VERSION = '1.50';
+$VERSION = '1.51';
 
 # localising prevents the warningness leaking out of this module
 local $^W = 1;    # use warnings is a 5.6-ism
 
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(os_is os_isnt die_if_os_is die_if_os_isnt die_unsupported list_platforms);
+@EXPORT_OK = qw(os_is os_isnt die_if_os_is die_if_os_isnt die_unsupported list_platforms list_family_members);
 %EXPORT_TAGS = (
     all      => \@EXPORT_OK,
     booleans => [qw(os_is os_isnt die_unsupported)],
@@ -205,6 +205,30 @@ sub list_platforms {
     } else {
         return \%modules;
     }
+}
+
+=head3 list_family_members
+
+Takes the name of an OS 'family' and returns a list of all its members.
+In list context, you get a list, in scalar context you get an arrayref.
+
+If called on something that isn't a family, you get an empty list (or
+a ref to an empty array).
+
+=cut
+
+sub list_family_members {
+    my $family = shift() ||
+        die(__PACKAGE__."::list_family_members needs a parameter\n");
+
+    # this will die if it's the wrong OS, but the module is loaded ...
+    eval qq{use Devel::AssertOS::$family};
+    # ... so we can now query it
+    my @members = eval qq{
+        no strict 'refs';
+	&{"Devel::AssertOS::${family}::matches"}()
+    };
+    return wantarray() ? @members : \@members;
 }
 
 =head1 PLATFORMS SUPPORTED

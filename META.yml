@@ -1,11 +1,13 @@
 --- #YAML:1.0
 name:               Devel-CheckOS
-version:            1.50
+version:            1.51
 abstract:           ~
 author:  []
 license:            other
 distribution_type:  module
 configure_requires:
+    ExtUtils::MakeMaker:  0
+build_requires:
     ExtUtils::MakeMaker:  0
 requires:
     File::Find::Rule:  0.28
@@ -15,7 +17,7 @@ no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.48
+generated_by:       ExtUtils::MakeMaker version 6.50
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4

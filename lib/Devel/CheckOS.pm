@@ -5,7 +5,7 @@ use Exporter;
 
 use vars qw($VERSION @ISA @EXPORT_OK %EXPORT_TAGS);
 
-$VERSION = '1.63';
+$VERSION = '1.64';
 
 # localising prevents the warningness leaking out of this module
 local $^W = 1;    # use warnings is a 5.6-ism
@@ -305,6 +305,8 @@ Thanks to Matt Kraai for information about QNX.
 
 Thanks to Kenichi Ishigaki and Gabor Szabo for reporting a bug on Windows,
 and to the former for providing a patch.
+
+Thanks to Paul Green for some information about VOS.
 
 =head1 SOURCE CODE REPOSITORY
 

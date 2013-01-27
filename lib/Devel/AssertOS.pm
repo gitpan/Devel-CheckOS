@@ -6,7 +6,7 @@ use strict;
 
 use vars qw($VERSION);
 
-$VERSION = '1.2';
+$VERSION = '1.21';
 
 # localising prevents the warningness leaking out of this module
 local $^W = 1;    # use warnings is a 5.6-ism
@@ -51,8 +51,8 @@ sub import {
         }
     }
 
-    Devel::CheckOS::die_if_os_is(@must_not);
-    Devel::CheckOS::die_if_os_isnt(@must);
+    Devel::CheckOS::die_if_os_is(@must_not) if @must_not;
+    Devel::CheckOS::die_if_os_isnt(@must)   if @must;
 }
 
 =head1 BUGS and FEEDBACK

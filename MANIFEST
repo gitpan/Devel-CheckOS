@@ -90,5 +90,6 @@ lib/Devel/AssertOS/EBCDIC.pm
 lib/Devel/AssertOS/MacOSX/v10_5.pm
 lib/Devel/AssertOS/GNUkFreeBSD.pm
 t/62-assertos-do-not-want.t
+lib/Devel/AssertOS/Bitrig.pm
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)

@@ -25,4 +25,4 @@ requires:
 resources:
   bugtracker: https://github.com/DrHyde/perl-modules-Devel-CheckOS/issues/new
   repository: https://github.com/DrHyde/perl-modules-Devel-CheckOS
-version: 1.72
+version: 1.73
